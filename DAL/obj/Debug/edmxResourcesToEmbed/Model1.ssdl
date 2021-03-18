@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tbl_category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_customer">
+    <Key>
+      <PropertyRef Name="CId" />
+    </Key>
+    <Property Name="CId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerType" Type="bit" />
+    <Property Name="WaiterId" Type="int" />
+    <Property Name="TableId" Type="int" />
+    <Property Name="Completed" Type="bit" />
+    <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="OrderDate" Type="date" />
+  </EntityType>
+  <EntityType Name="tbl_fooditems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
+    <Property Name="IsSpecial" Type="tinyint" Nullable="false" />
+    <Property Name="Discount" Type="varchar" MaxLength="50" />
+    <Property Name="Image" Type="varbinary(max)" />
+    <Property Name="FoodName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'RMSDB.dbo.tbl_image' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl_image">
+    <Key>
+      <PropertyRef Name="pictrure" />
+    </Key>
+    <Property Name="id" Type="int" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="pictrure" Type="image" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_orderedfooditem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="FoodId" Type="int" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="tbl_table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TableNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_waiter">
+    <Key>
+      <PropertyRef Name="WaiterID" />
+    </Key>
+    <Property Name="WaiterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WaiterName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WaiterContact" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WaiterAddress" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Userdetails">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Usertype" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tbl_customer_tbl_table">
+    <End Role="tbl_table" Type="Self.tbl_table" Multiplicity="0..1" />
+    <End Role="tbl_customer" Type="Self.tbl_customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_table">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_customer">
+        <PropertyRef Name="TableId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_customer_tbl_waiter">
+    <End Role="tbl_waiter" Type="Self.tbl_waiter" Multiplicity="0..1" />
+    <End Role="tbl_customer" Type="Self.tbl_customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_waiter">
+        <PropertyRef Name="WaiterID" />
+      </Principal>
+      <Dependent Role="tbl_customer">
+        <PropertyRef Name="WaiterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_orderedfooditem_tbl_fooditems">
+    <End Role="tbl_fooditems" Type="Self.tbl_fooditems" Multiplicity="0..1" />
+    <End Role="tbl_orderedfooditem" Type="Self.tbl_orderedfooditem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_fooditems">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_orderedfooditem">
+        <PropertyRef Name="FoodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RMSDBModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_category" EntityType="Self.tbl_category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_customer" EntityType="Self.tbl_customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_fooditems" EntityType="Self.tbl_fooditems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_orderedfooditem" EntityType="Self.tbl_orderedfooditem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_table" EntityType="Self.tbl_table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_waiter" EntityType="Self.tbl_waiter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Userdetails" EntityType="Self.Userdetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_image" EntityType="Self.tbl_image" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_image].[id] AS [id], 
+    [tbl_image].[name] AS [name], 
+    [tbl_image].[pictrure] AS [pictrure]
+    FROM [dbo].[tbl_image] AS [tbl_image]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_tbl_customer_tbl_table" Association="Self.FK_tbl_customer_tbl_table">
+      <End Role="tbl_table" EntitySet="tbl_table" />
+      <End Role="tbl_customer" EntitySet="tbl_customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_customer_tbl_waiter" Association="Self.FK_tbl_customer_tbl_waiter">
+      <End Role="tbl_waiter" EntitySet="tbl_waiter" />
+      <End Role="tbl_customer" EntitySet="tbl_customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_orderedfooditem_tbl_fooditems" Association="Self.FK_tbl_orderedfooditem_tbl_fooditems">
+      <End Role="tbl_fooditems" EntitySet="tbl_fooditems" />
+      <End Role="tbl_orderedfooditem" EntitySet="tbl_orderedfooditem" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

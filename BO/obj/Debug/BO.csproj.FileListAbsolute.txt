@@ -1,0 +1,34 @@
+E:\RMS\BO\bin\Debug\BO.dll.config
+E:\RMS\BO\bin\Debug\BO.dll
+E:\RMS\BO\bin\Debug\BO.pdb
+E:\RMS\BO\bin\Debug\EntityFramework.dll
+E:\RMS\BO\bin\Debug\EntityFramework.SqlServer.dll
+E:\RMS\BO\bin\Debug\EntityFramework.xml
+E:\RMS\BO\bin\Debug\EntityFramework.SqlServer.xml
+E:\RMS\BO\obj\Debug\BO.csproj.CoreCompileInputs.cache
+E:\RMS\BO\obj\Debug\BO.csproj.CopyComplete
+E:\RMS\BO\obj\Debug\BO.dll
+E:\RMS\BO\obj\Debug\BO.pdb
+E:\RMS\BO\obj\Debug\BO.csprojAssemblyReference.cache
+E:\Restaurant -Magh6\RMS\BO\bin\Debug\BO.dll.config
+E:\Restaurant -Magh6\RMS\BO\bin\Debug\BO.dll
+E:\Restaurant -Magh6\RMS\BO\bin\Debug\BO.pdb
+E:\Restaurant -Magh6\RMS\BO\bin\Debug\EntityFramework.dll
+E:\Restaurant -Magh6\RMS\BO\bin\Debug\EntityFramework.SqlServer.dll
+E:\Restaurant -Magh6\RMS\BO\bin\Debug\EntityFramework.xml
+E:\Restaurant -Magh6\RMS\BO\bin\Debug\EntityFramework.SqlServer.xml
+E:\Restaurant -Magh6\RMS\BO\obj\Debug\BO.csproj.CopyComplete
+E:\Restaurant -Magh6\RMS\BO\obj\Debug\BO.dll
+E:\Restaurant -Magh6\RMS\BO\obj\Debug\BO.pdb
+E:\RMS New\Restaurant -Magh6\RMS\BO\bin\Debug\BO.dll.config
+E:\RMS New\Restaurant -Magh6\RMS\BO\bin\Debug\BO.dll
+E:\RMS New\Restaurant -Magh6\RMS\BO\bin\Debug\BO.pdb
+E:\RMS New\Restaurant -Magh6\RMS\BO\bin\Debug\EntityFramework.dll
+E:\RMS New\Restaurant -Magh6\RMS\BO\bin\Debug\EntityFramework.SqlServer.dll
+E:\RMS New\Restaurant -Magh6\RMS\BO\bin\Debug\EntityFramework.xml
+E:\RMS New\Restaurant -Magh6\RMS\BO\bin\Debug\EntityFramework.SqlServer.xml
+E:\RMS New\Restaurant -Magh6\RMS\BO\obj\Debug\BO.csproj.CoreCompileInputs.cache
+E:\RMS New\Restaurant -Magh6\RMS\BO\obj\Debug\BO.csproj.CopyComplete
+E:\RMS New\Restaurant -Magh6\RMS\BO\obj\Debug\BO.dll
+E:\RMS New\Restaurant -Magh6\RMS\BO\obj\Debug\BO.pdb
+E:\RMS New\Restaurant -Magh6\RMS\BO\obj\Debug\BO.csprojAssemblyReference.cache

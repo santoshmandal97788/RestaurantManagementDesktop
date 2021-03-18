@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_customer">
+          <Key>
+            <PropertyRef Name="CId" />
+          </Key>
+          <Property Name="CId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CustomerType" Type="bit" />
+          <Property Name="WaiterId" Type="int" />
+          <Property Name="TableId" Type="int" />
+          <Property Name="Completed" Type="bit" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="OrderDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tbl_fooditems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="IsSpecial" Type="tinyint" Nullable="false" />
+          <Property Name="Discount" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="FoodName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'RMSDB.dbo.tbl_image' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_image">
+          <Key>
+            <PropertyRef Name="pictrure" />
+          </Key>
+          <Property Name="id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="pictrure" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_orderedfooditem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="FoodId" Type="int" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_waiter">
+          <Key>
+            <PropertyRef Name="WaiterID" />
+          </Key>
+          <Property Name="WaiterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WaiterName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="WaiterContact" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="WaiterAddress" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Userdetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Usertype" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_customer_tbl_table">
+          <End Role="tbl_table" Type="Self.tbl_table" Multiplicity="0..1" />
+          <End Role="tbl_customer" Type="Self.tbl_customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_table">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_customer">
+              <PropertyRef Name="TableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_customer_tbl_waiter">
+          <End Role="tbl_waiter" Type="Self.tbl_waiter" Multiplicity="0..1" />
+          <End Role="tbl_customer" Type="Self.tbl_customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_waiter">
+              <PropertyRef Name="WaiterID" />
+            </Principal>
+            <Dependent Role="tbl_customer">
+              <PropertyRef Name="WaiterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_orderedfooditem_tbl_fooditems">
+          <End Role="tbl_fooditems" Type="Self.tbl_fooditems" Multiplicity="0..1" />
+          <End Role="tbl_orderedfooditem" Type="Self.tbl_orderedfooditem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_fooditems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_orderedfooditem">
+              <PropertyRef Name="FoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RMSDBModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_category" EntityType="Self.tbl_category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_customer" EntityType="Self.tbl_customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_fooditems" EntityType="Self.tbl_fooditems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_orderedfooditem" EntityType="Self.tbl_orderedfooditem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_table" EntityType="Self.tbl_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_waiter" EntityType="Self.tbl_waiter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Userdetails" EntityType="Self.Userdetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_image" EntityType="Self.tbl_image" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_image].[id] AS [id], 
+    [tbl_image].[name] AS [name], 
+    [tbl_image].[pictrure] AS [pictrure]
+    FROM [dbo].[tbl_image] AS [tbl_image]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tbl_customer_tbl_table" Association="Self.FK_tbl_customer_tbl_table">
+            <End Role="tbl_table" EntitySet="tbl_table" />
+            <End Role="tbl_customer" EntitySet="tbl_customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_customer_tbl_waiter" Association="Self.FK_tbl_customer_tbl_waiter">
+            <End Role="tbl_waiter" EntitySet="tbl_waiter" />
+            <End Role="tbl_customer" EntitySet="tbl_customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_orderedfooditem_tbl_fooditems" Association="Self.FK_tbl_orderedfooditem_tbl_fooditems">
+            <End Role="tbl_fooditems" EntitySet="tbl_fooditems" />
+            <End Role="tbl_orderedfooditem" EntitySet="tbl_orderedfooditem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RMSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RMSDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="RMSDBModel.sysdiagram" />
+          <EntitySet Name="tbl_category" EntityType="RMSDBModel.tbl_category" />
+          <EntitySet Name="tbl_customer" EntityType="RMSDBModel.tbl_customer" />
+          <EntitySet Name="tbl_fooditems" EntityType="RMSDBModel.tbl_fooditems" />
+          <EntitySet Name="tbl_orderedfooditem" EntityType="RMSDBModel.tbl_orderedfooditem" />
+          <EntitySet Name="tbl_table" EntityType="RMSDBModel.tbl_table" />
+          <EntitySet Name="tbl_waiter" EntityType="RMSDBModel.tbl_waiter" />
+          <EntitySet Name="Userdetails" EntityType="RMSDBModel.Userdetail" />
+          <EntitySet Name="tbl_image" EntityType="RMSDBModel.tbl_image" />
+          <AssociationSet Name="FK_tbl_customer_tbl_table" Association="RMSDBModel.FK_tbl_customer_tbl_table">
+            <End Role="tbl_table" EntitySet="tbl_table" />
+            <End Role="tbl_customer" EntitySet="tbl_customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_customer_tbl_waiter" Association="RMSDBModel.FK_tbl_customer_tbl_waiter">
+            <End Role="tbl_waiter" EntitySet="tbl_waiter" />
+            <End Role="tbl_customer" EntitySet="tbl_customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_orderedfooditem_tbl_fooditems" Association="RMSDBModel.FK_tbl_orderedfooditem_tbl_fooditems">
+            <End Role="tbl_fooditems" EntitySet="tbl_fooditems" />
+            <End Role="tbl_orderedfooditem" EntitySet="tbl_orderedfooditem" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_customer">
+          <Key>
+            <PropertyRef Name="CId" />
+          </Key>
+          <Property Name="CId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerType" Type="Boolean" />
+          <Property Name="WaiterId" Type="Int32" />
+          <Property Name="TableId" Type="Int32" />
+          <Property Name="Completed" Type="Boolean" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OrderDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tbl_table" Relationship="RMSDBModel.FK_tbl_customer_tbl_table" FromRole="tbl_customer" ToRole="tbl_table" />
+          <NavigationProperty Name="tbl_waiter" Relationship="RMSDBModel.FK_tbl_customer_tbl_waiter" FromRole="tbl_customer" ToRole="tbl_waiter" />
+        </EntityType>
+        <EntityType Name="tbl_fooditems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="IsSpecial" Type="Byte" Nullable="false" />
+          <Property Name="Discount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FoodName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_orderedfooditem" Relationship="RMSDBModel.FK_tbl_orderedfooditem_tbl_fooditems" FromRole="tbl_fooditems" ToRole="tbl_orderedfooditem" />
+        </EntityType>
+        <EntityType Name="tbl_orderedfooditem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FoodId" Type="Int32" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="tbl_fooditems" Relationship="RMSDBModel.FK_tbl_orderedfooditem_tbl_fooditems" FromRole="tbl_orderedfooditem" ToRole="tbl_fooditems" />
+        </EntityType>
+        <EntityType Name="tbl_table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tbl_customer" Relationship="RMSDBModel.FK_tbl_customer_tbl_table" FromRole="tbl_table" ToRole="tbl_customer" />
+        </EntityType>
+        <EntityType Name="tbl_waiter">
+          <Key>
+            <PropertyRef Name="WaiterID" />
+          </Key>
+          <Property Name="WaiterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WaiterName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WaiterContact" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WaiterAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_customer" Relationship="RMSDBModel.FK_tbl_customer_tbl_waiter" FromRole="tbl_waiter" ToRole="tbl_customer" />
+        </EntityType>
+        <EntityType Name="Userdetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Usertype" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_image">
+          <Key>
+            <PropertyRef Name="pictrure" />
+          </Key>
+          <Property Name="id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pictrure" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_tbl_customer_tbl_table">
+          <End Type="RMSDBModel.tbl_table" Role="tbl_table" Multiplicity="0..1" />
+          <End Type="RMSDBModel.tbl_customer" Role="tbl_customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_table">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_customer">
+              <PropertyRef Name="TableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_customer_tbl_waiter">
+          <End Type="RMSDBModel.tbl_waiter" Role="tbl_waiter" Multiplicity="0..1" />
+          <End Type="RMSDBModel.tbl_customer" Role="tbl_customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_waiter">
+              <PropertyRef Name="WaiterID" />
+            </Principal>
+            <Dependent Role="tbl_customer">
+              <PropertyRef Name="WaiterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_orderedfooditem_tbl_fooditems">
+          <End Type="RMSDBModel.tbl_fooditems" Role="tbl_fooditems" Multiplicity="0..1" />
+          <End Type="RMSDBModel.tbl_orderedfooditem" Role="tbl_orderedfooditem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_fooditems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_orderedfooditem">
+              <PropertyRef Name="FoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RMSDBModelStoreContainer" CdmEntityContainer="RMSDBEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="RMSDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_category">
+            <EntityTypeMapping TypeName="RMSDBModel.tbl_category">
+              <MappingFragment StoreEntitySet="tbl_category">
+                <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_customer">
+            <EntityTypeMapping TypeName="RMSDBModel.tbl_customer">
+              <MappingFragment StoreEntitySet="tbl_customer">
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="TableId" ColumnName="TableId" />
+                <ScalarProperty Name="WaiterId" ColumnName="WaiterId" />
+                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="CId" ColumnName="CId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_fooditems">
+            <EntityTypeMapping TypeName="RMSDBModel.tbl_fooditems">
+              <MappingFragment StoreEntitySet="tbl_fooditems">
+                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="IsSpecial" ColumnName="IsSpecial" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_orderedfooditem">
+            <EntityTypeMapping TypeName="RMSDBModel.tbl_orderedfooditem">
+              <MappingFragment StoreEntitySet="tbl_orderedfooditem">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="FoodId" ColumnName="FoodId" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_table">
+            <EntityTypeMapping TypeName="RMSDBModel.tbl_table">
+              <MappingFragment StoreEntitySet="tbl_table">
+                <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+                <ScalarProperty Name="TableNumber" ColumnName="TableNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_waiter">
+            <EntityTypeMapping TypeName="RMSDBModel.tbl_waiter">
+              <MappingFragment StoreEntitySet="tbl_waiter">
+                <ScalarProperty Name="WaiterAddress" ColumnName="WaiterAddress" />
+                <ScalarProperty Name="WaiterContact" ColumnName="WaiterContact" />
+                <ScalarProperty Name="WaiterName" ColumnName="WaiterName" />
+                <ScalarProperty Name="WaiterID" ColumnName="WaiterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Userdetails">
+            <EntityTypeMapping TypeName="RMSDBModel.Userdetail">
+              <MappingFragment StoreEntitySet="Userdetails">
+                <ScalarProperty Name="Usertype" ColumnName="Usertype" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_image">
+            <EntityTypeMapping TypeName="RMSDBModel.tbl_image">
+              <MappingFragment StoreEntitySet="tbl_image">
+                <ScalarProperty Name="pictrure" ColumnName="pictrure" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
